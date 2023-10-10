@@ -1,0 +1,49 @@
+from scipy.linalg import expm
+
+def skew_symmetric_matrix(omega):
+    """
+    Convert a vector to a skew-symmetric matrix.
+    """
+    return np.array([[    0, -omega[2],  omega[1]],
+                     [omega[2],      0, -omega[0]],
+                     [-omega[1], omega[0],      0]])
+
+def rotation_matrix_from_axis_angle(omega, theta):
+    """
+    Calculate the rotation matrix from an axis-angle representation.
+    """
+    omega_skew = skew_symmetric_matrix(omega)
+    R = np.eye(3) + np.sin(theta) * omega_skew + (1 - np.cos(theta)) * np.dot(omega_skew, omega_skew)
+    return R
+
+def plot_frame(R, origin=[0, 0, 0]):
+    """
+    Plot the frame axes in 3D space relative to a reference frame {s}.
+    """
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Plot each axis of the frame
+    for i, color, label in zip(range(3), ['r', 'g', 'b'], ['x', 'y', 'z']):
+        ax.quiver(origin[0], origin[1], origin[2], R[0, i], R[1, i], R[2, i], color=color, label=f"{label}-axis")
+    
+    ax.set_xlim([-1, 1])
+    ax.set_ylim([-1, 1])
+    ax.set_zlim([-1, 1])
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.legend()
+    plt.show()
+
+# Given axis-angle representation omega_theta = (1, 2, 0) and theta calculated as magnitude of omega_theta
+omega_theta = np.array([1, 2, 0])
+theta = np.linalg.norm(omega_theta)
+omega = omega_theta / theta
+
+# Calculate the rotation matrix
+R = rotation_matrix_from_axis_angle(omega, theta)
+
+# Plot the frame and rotation axis
+plot_frame(R)
+plot_axis(omega)
