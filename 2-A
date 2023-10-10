@@ -1,0 +1,13 @@
+from math import acos, degrees
+
+# Given Trace of R
+trace_R = -1
+
+# Calculate cos(theta)
+cos_theta = (trace_R - 1) / 2
+
+# Calculate theta in radians and convert to degrees
+theta_rad = acos(cos_theta)
+theta_deg = degrees(theta_rad)
+
+theta_rad, theta_deg
