@@ -1,0 +1,20 @@
+from numpy import array, cross, dot, arccos, sin, cos
+from numpy.linalg import norm
+
+# Given vectors and rotation axis
+v1 = array([1, 0, 1])
+v2 = array([0, 1, 1])
+omega_hat = array([2/3, 2/3, 1/3])
+
+# Compute the right-hand side of Rodrigues' formula
+rhs = v2 - v1 * cos(theta_rad) - omega_hat * dot(omega_hat, v1) * (1 - cos(theta_rad))
+
+# Compute the cross product (omega_hat x v1)
+cross_product = cross(omega_hat, v1)
+
+# Compute theta using the right-hand side and the cross product
+# sin(theta) = ||rhs|| / ||cross_product||
+theta_rad_b = arccos(dot(rhs, cross_product) / (norm(rhs) * norm(cross_product)))
+theta_deg_b = degrees(theta_rad_b)
+
+theta_rad_b, theta_deg_b
