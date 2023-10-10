@@ -1,0 +1,56 @@
+from math import atan2, sqrt, radians, degrees
+
+# Given Roll-Pitch-Yaw angles in degrees
+alpha_rpy_deg = 30
+beta_rpy_deg = 60
+gamma_rpy_deg = 45
+
+# Convert degrees to radians
+alpha_rpy = radians(alpha_rpy_deg)
+beta_rpy = radians(beta_rpy_deg)
+gamma_rpy = radians(gamma_rpy_deg)
+
+# Compute sines and cosines of the angles for convenience
+s_alpha_rpy = sin(alpha_rpy)
+c_alpha_rpy = cos(alpha_rpy)
+s_beta_rpy = sin(beta_rpy)
+c_beta_rpy = cos(beta_rpy)
+s_gamma_rpy = sin(gamma_rpy)
+c_gamma_rpy = cos(gamma_rpy)
+
+# Common term used in the equations
+common_term = sqrt(s_gamma_rpy**2 + s_beta_rpy**2 * c_gamma_rpy**2)
+
+# Compute ZYZ Euler angles using the first set of equations
+alpha_zyz1 = atan2(
+    (s_alpha_rpy * s_beta_rpy * c_gamma_rpy - c_alpha_rpy * s_gamma_rpy) / common_term,
+    (c_alpha_rpy * s_beta_rpy * c_gamma_rpy + s_alpha_rpy * s_gamma_rpy) / common_term
+)
+beta_zyz1 = atan2(common_term, c_beta_rpy * c_gamma_rpy)
+gamma_zyz1 = atan2(
+    (c_beta_rpy * s_gamma_rpy) / common_term,
+    (s_beta_rpy) / common_term
+)
+
+# Compute ZYZ Euler angles using the second set of equations
+alpha_zyz2 = atan2(
+    (s_alpha_rpy * s_beta_rpy * c_gamma_rpy - c_alpha_rpy * s_gamma_rpy) / -common_term,
+    (c_alpha_rpy * s_beta_rpy * c_gamma_rpy + s_alpha_rpy * s_gamma_rpy) / -common_term
+)
+beta_zyz2 = atan2(-common_term, c_beta_rpy * c_gamma_rpy)
+gamma_zyz2 = atan2(
+    (c_beta_rpy * s_gamma_rpy) / -common_term,
+    (s_beta_rpy) / -common_term
+)
+
+# Convert the results to degrees
+alpha_zyz1_deg = degrees(alpha_zyz1)
+beta_zyz1_deg = degrees(beta_zyz1)
+gamma_zyz1_deg = degrees(gamma_zyz1)
+
+alpha_zyz2_deg = degrees(alpha_zyz2)
+beta_zyz2_deg = degrees(beta_zyz2)
+gamma_zyz2_deg = degrees(gamma_zyz2)
+
+alpha_zyz1_deg, beta_zyz1_deg, gamma_zyz1_deg, alpha_zyz2_deg, beta_zyz2_deg, gamma_zyz2_deg
+
