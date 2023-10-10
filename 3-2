@@ -1,0 +1,11 @@
+# Calculate the second set of roll-pitch-yaw angles
+beta_prime = pi - beta
+alpha_prime = pi + alpha
+gamma_prime = pi + gamma
+
+# Convert the second set of angles from radians to degrees
+beta_prime_deg = degrees(beta_prime)
+alpha_prime_deg = degrees(alpha_prime)
+gamma_prime_deg = degrees(gamma_prime)
+
+beta_prime_deg, alpha_prime_deg, gamma_prime_deg
