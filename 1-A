@@ -1,0 +1,47 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.linalg import logm
+
+def axis_angle_from_rotation_matrix(R):
+    """
+    Calculate the axis-angle representation from a rotation matrix.
+    """
+    # Calculate the angle
+    theta = np.arccos((np.trace(R) - 1) / 2)
+    
+    # Calculate the rotation axis
+    omega = (1 / (2 * np.sin(theta))) * np.array([R[2, 1] - R[1, 2],
+                                                  R[0, 2] - R[2, 0],
+                                                  R[1, 0] - R[0, 1]])
+    
+    return omega, theta
+
+def plot_axis(omega, origin=[0, 0, 0]):
+    """
+    Plot the rotation axis in 3D space.
+    """
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.quiver(origin[0], origin[1], origin[2], omega[0], omega[1], omega[2], color='b', label='Rotation Axis')
+    ax.set_xlim([-1, 1])
+    ax.set_ylim([-1, 1])
+    ax.set_zlim([-1, 1])
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+    ax.legend()
+    plt.show()
+
+# Given rotation matrix R_sa
+R_sa = np.array([[0, -1, 0],
+                 [0,  0, 1],
+                 [1,  0, 0]])
+
+# Calculate axis-angle representation
+omega, theta = axis_angle_from_rotation_matrix(R_sa)
+
+# Plot the rotation axis
+plot_axis(omega)
+
+omega, theta
+
