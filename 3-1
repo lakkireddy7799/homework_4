@@ -1,0 +1,21 @@
+from math import atan2, cos, sqrt, degrees
+
+# Given rotation matrix R
+R = [[0.6, 0.79, -0.01],
+     [0.47, -0.34, 0.81],
+     [0.64, -0.5, -0.58]]
+
+# Calculate pitch (beta)
+beta = atan2(-R[2][0], sqrt(R[0][0]**2 + R[1][0]**2))
+
+# Calculate roll (alpha) and yaw (gamma)
+alpha = atan2(R[1][0]/cos(beta), R[0][0]/cos(beta))
+gamma = atan2(R[2][1]/cos(beta), R[2][2]/cos(beta))
+
+# Convert angles from radians to degrees
+beta_deg = degrees(beta)
+alpha_deg = degrees(alpha)
+gamma_deg = degrees(gamma)
+
+beta_deg, alpha_deg, gamma_deg
+
